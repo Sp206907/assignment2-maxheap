@@ -1,31 +1,51 @@
 
-```markdown
-# Assignment 2 – Algorithmic Analysis and Peer Code Review  
-### Algorithm: **Max-Heap Implementation (with Performance Metrics and CLI Benchmark)**
-
 ---
+
+# 🧮 Assignment 2 — MaxHeap Implementation (Java)
 
 ## 📘 Overview
 
-This project implements a **Max-Heap** data structure in Java as part of **Assignment 2**.  
-It includes:
-- A complete heap implementation with `insert`, `extractMax`, and `increaseKey`.
-- A `PerformanceTracker` to monitor comparisons, swaps, and memory accesses.
-- A CLI-based benchmark runner.
-- Comprehensive **JUnit 5** test coverage.
+This project implements a **MaxHeap data structure in Java**, featuring:
 
-This work satisfies the assignment requirements for:
-- Clean implementation
-- Algorithmic analysis
-- Empirical performance testing
-- Git workflow documentation
+* Core heap operations (`insert`, `extractMax`, `increaseKey`)
+* Performance tracking with a custom **`PerformanceTracker`** class
+* A **CLI benchmarking tool** for heap performance testing
+* **JUnit 5 test suite** ensuring correctness and stability
+
+It is designed as part of an **Algorithms and Data Structures** assignment to demonstrate:
+
+* Efficient heap-based priority queue implementation
+* Performance analysis (comparisons, swaps, memory accesses)
+* Software engineering practices (testing, branching, documentation)
 
 ---
 
-## 📁 Project Structure
+## ⚙️ Features
+
+✅ **MaxHeap Implementation**
+
+* Insert, extract maximum, increase key, and heapify logic
+* Maintains heap property at all times
+
+✅ **Performance Metrics**
+
+* Tracks comparisons, swaps, and memory operations
+
+✅ **CLI Benchmark Tool**
+
+* Randomized input generation
+* Execution time and performance report
+
+✅ **JUnit 5 Testing**
+
+* Unit and integration tests for all heap operations
+* Validation of performance metrics
+
+---
+
+## 🗂️ Project Structure
 
 ```
-
 assignment2-maxheap/
 ├── src/
 │   ├── main/java/
@@ -34,195 +54,259 @@ assignment2-maxheap/
 │   │   └── cli/BenchmarkRunner.java
 │   └── test/java/
 │       └── algorithms/MaxHeapTest.java
-├── pom.xml
-└── README.md
-
-````
+├── docs/
+│   ├── analysis-report.pdf
+│   └── performance-plots/
+│       └── maxheap_results.csv
+├── README.md
+└── pom.xml
+```
 
 ---
 
-## ⚙️ Requirements
+## 🧰 Installation and Setup
 
-- **Java 11 or higher**
-- **Maven 3.9+**
+### Prerequisites
 
-Verify your environment:
+* **Java 11 or later**
+* **Maven 3.6+**
+
+### Clone the Repository
 
 ```bash
-java -version
-mvn -v
-````
+git clone https://github.com/<your-username>/assignment2-maxheap.git
+cd assignment2-maxheap
+```
 
----
-
-## 🧩 Build and Run Instructions
-
-### 1. Compile and Run Tests
+### Build the Project
 
 ```bash
-mvn clean test
+mvn clean compile
 ```
 
-If everything is configured correctly, all tests should pass with:
-
-```
-BUILD SUCCESS
-```
-
-### 2. Run the CLI Benchmark
-
-```bash
-mvn -q -DskipTests package
-java -cp target/assignment2-maxheap-1.0-SNAPSHOT.jar cli.BenchmarkRunner
-```
-
-You will be prompted to enter a heap size (e.g., `1000`).
-The program inserts random integers into the heap, extracts them all, and prints performance metrics.
-
----
-
-## 🧮 Implementation Details
-
-### **Class: MaxHeap**
-
-* **Type:** Array-based binary Max-Heap
-* **Operations:**
-
-    * `insert(int value)` — adds a new element, maintains heap property via sift-up.
-    * `extractMax()` — removes and returns the maximum element, uses sift-down.
-    * `increaseKey(int index, int newValue)` — increases key value and adjusts heap.
-    * `isEmpty()`, `getSize()` — utility methods.
-
-### **PerformanceTracker**
-
-Tracks internal algorithmic operations:
-
-* `comparisons`
-* `swaps`
-* `arrayAccesses`
-* `memoryAccesses`
-
-### **BenchmarkRunner**
-
-Interactive CLI tool to test performance with random data.
-Displays tracked metrics after all operations complete.
-
----
-
-## 🧠 Asymptotic Complexity
-
-| Operation        | Time Complexity (Worst/Average) | Best Case | Space Complexity |
-| ---------------- | ------------------------------- | --------- | ---------------- |
-| `insert`         | O(log n)                        | Ω(1)      | O(1)             |
-| `extractMax`     | O(log n)                        | Ω(1)      | O(1)             |
-| `increaseKey`    | O(log n)                        | Ω(1)      | O(1)             |
-| Build by inserts | O(n log n)                      | —         | O(1)             |
-
-> Note: A full bottom-up heap construction could achieve Θ(n), but this implementation emphasizes individual insert and extract operations.
-
----
-
-## 🧪 Testing (JUnit 5)
-
-### Covered Test Cases
-
-* ✅ Insert and extract correctness
-* ✅ Heap property maintenance
-* ✅ Increase-key functionality
-* ✅ Duplicates and single-element cases
-* ✅ Performance metric validation
-* ✅ Empty heap and invalid index exceptions
-
-Example command:
+### Run the Tests
 
 ```bash
 mvn test
 ```
 
-### Example Negative Tests (recommended additions)
+### Run the CLI Benchmark
 
-```java
-assertThrows(IllegalStateException.class, () -> new MaxHeap(0).extractMax());
-assertThrows(IllegalArgumentException.class, () -> heap.increaseKey(1, -10));
+```bash
+mvn exec:java -Dexec.mainClass="cli.BenchmarkRunner"
 ```
 
----
-
-## 📊 Benchmarking & Empirical Validation
-
-### BenchmarkRunner Behavior
-
-1. Accepts an input size `n`.
-2. Inserts `n` random integers.
-3. Extracts all while maintaining heap order.
-4. Prints tracked metrics at the end.
-
-Sample Output:
+When prompted:
 
 ```
-Enter heap size: 10000
+Enter heap size: 1000
+```
+
+Output example:
+
+```
 Extracting all elements...
-Performance Metrics {Comparisons = 152376, Swaps = 76182, Array Accesses = 0, Memory Accesses = 0}
-```
-
-You can extend this for **CSV export** to analyze time vs input size for `n = 100, 1000, 10000, 100000`.
-
----
-
-## 🧭 Git Workflow
-
-### Recommended Branching
-
-| Branch                 | Purpose                        |
-| ---------------------- | ------------------------------ |
-| `main`                 | Stable releases only           |
-| `feature/algorithm`    | Implementation work            |
-| `feature/metrics`      | Tracking performance metrics   |
-| `feature/testing`      | Unit tests                     |
-| `feature/cli`          | CLI interface                  |
-| `feature/optimization` | Optimizations and improvements |
-
-### Example Commit Flow
-
-```bash
-git add -A
-git commit -m "feat(algorithm): implemented MaxHeap with performance tracking"
-git commit -m "test: added JUnit tests for heap operations"
-git commit -m "docs(readme): added project documentation"
-git tag v1.0
-git push && git push --tags
+Performance Metrics {Comparisons = 2458, Swaps = 1231, Array Accesses = 3690, Memory Accesses = 1005}
 ```
 
 ---
 
-## 🧾 Complexity Analysis Summary
+## 🧩 How It Works
 
-* **Time Complexity:**
+1. **Heap Construction:**
+   New elements are inserted into the heap array, maintaining heap property via `heapifyUp`.
 
-    * Average: Θ(log n)
-    * Worst: O(log n)
-    * Best: Ω(1)
-* **Space Complexity:** O(1) auxiliary (in-place)
-* **Performance Factors:**
+2. **Extraction:**
+   The largest element (root) is swapped with the last, removed, and heapified down.
 
-    * Number of comparisons grows with `n log n`.
-    * Swap frequency directly affects practical runtime.
-    * Cache behavior and branch prediction can influence constant factors.
+3. **Performance Tracking:**
+   Every comparison, swap, and memory access is logged through the `PerformanceTracker`.
 
+4. **Benchmarking:**
+   The CLI measures total operations and prints summarized performance metrics.
 
-## 🧑‍💻 Author Information
+---
 
-* **Student:** *Ernar*
-* **Partner:** *Nurdaulet*
-* **Algorithm:** Max-Heap (with `increaseKey` and `extractMax`)
-* **Course:** Algorithmic Analysis and Peer Code Review — Fall 2025
+## 🧪 Example Output (CLI Benchmark)
 
+```
+Enter heap size: 500
+Extracting all elements...
+Performance Metrics {Comparisons = 1103, Swaps = 553, Array Accesses = 1650, Memory Accesses = 502}
+```
 
+---
 
-C:\Users\ernar\assignment2-maxheap\
+## 🌿 Branch Naming Convention
+
+| Branch Name            | Purpose                                          |
+| ---------------------- | ------------------------------------------------ |
+| `main`                 | Stable, tested release-ready code                |
+| `feature/algorithm`    | Core algorithm implementation (`MaxHeap.java`)   |
+| `feature/metrics`      | Performance tracking (`PerformanceTracker.java`) |
+| `feature/testing`      | Unit tests (JUnit 5)                             |
+| `feature/cli`          | Command-line interface for benchmarking          |
+| `feature/optimization` | Performance and memory optimizations             |
+
+---
+
+## 🔄 Git Workflow
+
+### 1️⃣ Create and switch to a new branch
 
 ```bash
-git add README.md
-git commit -m "docs(readme): added complete project documentation"
+git checkout -b feature/algorithm
+```
+
+### 2️⃣ Make your changes
+
+Edit your files, then:
+
+```bash
+git add .
+git commit -m "feat(algorithm): implement MaxHeap insert/extract"
+git push origin feature/algorithm
+```
+
+### 3️⃣ Open a Pull Request (PR)
+
+* Go to GitHub → your repository
+* Click **Compare & Pull Request**
+* Choose:
+
+  * **Base:** `main`
+  * **Compare:** `feature/algorithm`
+* Add a short description and submit PR
+
+---
+
+## 🧪 Branch Workflows
+
+### `feature/algorithm`
+
+Implements core heap operations.
+
+```bash
+git switch feature/algorithm
+git add src/main/java/algorithms/MaxHeap.java
+git commit -m "feat(algorithm): implement heapify logic"
 git push
-````
+```
+
+### `feature/metrics`
+
+Implements performance tracking.
+
+```bash
+git switch feature/metrics
+git add src/main/java/metrics/PerformanceTracker.java
+git commit -m "feat(metrics): track comparisons and swaps"
+git push
+```
+
+### `feature/testing`
+
+Adds JUnit 5 test suite.
+
+```bash
+git switch feature/testing
+git add src/test/java/algorithms/MaxHeapTest.java
+git commit -m "test(maxheap): add heap property and edge case tests"
+git push
+```
+
+### `feature/cli`
+
+Implements benchmarking interface.
+
+```bash
+git switch feature/cli
+git add src/main/java/cli/BenchmarkRunner.java
+git commit -m "feat(cli): add CLI performance testing"
+git push
+```
+
+### `feature/optimization`
+
+Improves algorithmic performance.
+
+```bash
+git switch feature/optimization
+git add src/main/java/algorithms/MaxHeap.java
+git commit -m "perf(maxheap): optimize siftDown performance"
+git push
+```
+
+---
+
+## 🚀 Merging Branches to Main
+
+After all features are implemented and tested:
+
+```bash
+git switch main
+git pull
+git merge feature/algorithm
+git merge feature/metrics
+git merge feature/testing
+git merge feature/cli
+git merge feature/optimization
+git push
+```
+
+Or, perform merges through **Pull Requests** on GitHub.
+
+---
+
+## 🏷️ Release Tagging
+
+When stable:
+
+```bash
+git switch main
+git pull
+git tag v1.0 -m "v1.0: Complete MaxHeap implementation with metrics and tests"
+git push origin v1.0
+```
+
+---
+
+## 🧾 Commit Message Convention
+
+Follow **Conventional Commits** for clarity:
+
+| Type        | Description         | Example                                 |
+| ----------- | ------------------- | --------------------------------------- |
+| `feat:`     | Add a new feature   | `feat(algorithm): implement heapify`    |
+| `fix:`      | Fix a bug           | `fix(maxheap): correct array index bug` |
+| `test:`     | Add tests           | `test(cli): add benchmark test case`    |
+| `docs:`     | Update docs         | `docs(readme): add usage examples`      |
+| `perf:`     | Improve performance | `perf(maxheap): reduce redundant swaps` |
+| `refactor:` | Code refactor       | `refactor(metrics): simplify counters`  |
+
+---
+
+## 📊 Documentation
+
+All performance data and reports are stored in the `docs/` folder:
+
+```
+docs/
+├── analysis-report.pdf
+└── performance-plots/
+    └── maxheap_results.csv
+```
+
+* **`analysis-report.pdf`** → detailed explanation of results
+* **`maxheap_results.csv`** → benchmark data for performance plots
+
+---
+
+## 👨‍💻 Author
+
+**Ernar**
+Assignment 2 — Data Structures & Algorithms
+© 2025 All Rights Reserved
+
+---
+
